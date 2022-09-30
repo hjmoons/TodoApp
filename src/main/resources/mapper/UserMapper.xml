@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.demo.todoapp.dao.UserMapper">
+    <!-- 회원 가입 -->
+    <insert id="insertUser" parameterType="com.demo.todoapp.dto.UserDTO">
+        <![CDATA[
+        INSERT INTO user (id, passwd, name, email, auth) values (#{id}, #{passwd}, #{name}, #{email}, #{auth})
+        ]]>
+    </insert>
+
+    <!-- 로그인 -->
+    <select id="loginUser" parameterType="com.demo.todoapp.dto.UserDTO" resultType="com.demo.todoapp.dto.UserDTO">
+        <![CDATA[
+        SELECT id, passwd, name, eamil, auth FROM user WHERE id=#{id} and passwd=#{passwd}
+        ]]>
+    </select>
+
+    <!-- ID 중복 확인 -->
+    <select id="validateUser" parameterType="com.demo.todoapp.dto.UserDTO" resultType="java.lang.Integer">
+        <![CDATA[
+        SELECT IFNULL(COUNT(*), 0) FROM user WHERE id = #{id}
+        ]]>
+    </select>
+</mapper>
