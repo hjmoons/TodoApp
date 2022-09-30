@@ -9,9 +9,9 @@ import java.util.List;
 @Mapper
 @Repository
 public interface TodoMapper {
-    public void insertTodo(TodoDTO todoDTO);
-    public TodoDTO selectTodo(String id);
-    public List<TodoDTO> selectTodoList();
-    public void updateTodo(TodoDTO todoDTO);
-    public void deleteTodo(TodoDTO todoDTO);
+    void insertTodo(TodoDTO todoDTO);
+    TodoDTO selectTodo(String id);
+    List<TodoDTO> selectTodoList();
+    void updateTodo(TodoDTO todoDTO);
+    void deleteTodo(TodoDTO todoDTO);
 }
