@@ -14,21 +14,23 @@ public class UserSeviceImpl implements UserService{
     private UserMapper userMapper;
 
     @Override
-    public int validateUser(final UserDTO userDTO) {
-        return 0;
+    public boolean validateUser(String userId) {
+        int result = userMapper.validateUser(userId);
+        return result > 0;
     }
 
     @Override
-    public int insertUser(final UserDTO userDTO) {
+    public boolean insertUser(final UserDTO userDTO) {
         validate(userDTO);
         int result = userMapper.insertUser(userDTO);
         log.info("Entity Id: {} is saved.", userDTO.getId());
-        return result;
+        return result > 0;
     }
 
     @Override
     public UserDTO loginUser(final UserDTO userDTO) {
-        return null;
+        validate(userDTO);
+        return userMapper.loginUser(userDTO);
     }
 
     private void validate(final UserDTO userDTO) {

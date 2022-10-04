@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("todo")
+@RequestMapping("/todo")
 public class TodoController {
     @Autowired
     private TodoServiceImpl service;
 
     @PostMapping
-    public ResponseEntity<?> createTodo(@RequestBody TodoDTO dto) {
+    public ResponseEntity<?> insertTodo(@RequestBody TodoDTO dto) {
         try {
             String temporaryUserId = "temporary-user";
             TodoDTO entity = dto;

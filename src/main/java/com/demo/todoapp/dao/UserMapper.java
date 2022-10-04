@@ -9,7 +9,7 @@ import java.util.List;
 @Mapper
 @Repository
 public interface UserMapper {
-    int validateUser(UserDTO userDTO);
+    int validateUser(String userId);
     int insertUser(UserDTO userDTO);
     UserDTO loginUser(UserDTO userDTO);
 
