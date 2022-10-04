@@ -6,21 +6,28 @@
     <!-- 회원 가입 -->
     <insert id="insertUser" parameterType="com.demo.todoapp.dto.UserDTO">
         <![CDATA[
-        INSERT INTO user (id, passwd, name, email, auth) values (#{id}, #{passwd}, #{name}, #{email}, #{auth})
+        INSERT INTO user (id, username, email, passwd) values (UUID(), #{username}, #{email}, #{passwd})
         ]]>
     </insert>
 
     <!-- 로그인 -->
-    <select id="loginUser" parameterType="com.demo.todoapp.dto.UserDTO" resultType="com.demo.todoapp.dto.UserDTO">
+    <select id="loginUser" parameterType="java.lang.String" resultType="com.demo.todoapp.dto.UserDTO">
         <![CDATA[
-        SELECT id, passwd, name, email, auth FROM user WHERE id=#{id} and passwd=#{passwd}
+        SELECT id, username, email FROM user WHERE email=#{email} and passwd=#{passwd}
         ]]>
     </select>
 
     <!-- ID 중복 확인 -->
-    <select id="validateUser" parameterType="java.lang.String" resultType="java.lang.Integer">
+    <select id="existsUser" parameterType="java.lang.String" resultType="java.lang.Integer">
         <![CDATA[
-        SELECT IFNULL(COUNT(*), 0) FROM user WHERE id = #{userId}
+        SELECT IFNULL(COUNT(*), 0) FROM user WHERE email = #{email}
+        ]]>
+    </select>
+
+    <!-- User 조회 -->
+    <select id="selectUser" resultType="com.demo.todoapp.dto.UserDTO">
+        <![CDATA[
+        SELECT id, email, username FROM user WHERE email=#{email}
         ]]>
     </select>
 </mapper>

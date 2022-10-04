@@ -14,34 +14,25 @@ public class UserSeviceImpl implements UserService{
     private UserMapper userMapper;
 
     @Override
-    public boolean validateUser(String userId) {
-        int result = userMapper.validateUser(userId);
-        return result > 0;
+    public UserDTO insertUser(final UserDTO userDTO) {
+        if(userDTO == null || userDTO.getEmail() == null) {
+            throw new RuntimeException("Invalid arguments");
+        }
+        log.info(String.valueOf(userDTO));
+        final String email = userDTO.getEmail();
+        log.info(String.valueOf(userMapper.existsUser(email)));
+        if(userMapper.existsUser(email) > 0) {
+            log.warn("Email already exists {}", email);
+            throw new RuntimeException("Email already exists");
+        }
+
+        userMapper.insertUser(userDTO);
+
+        return userMapper.selectUser(email);
     }
 
     @Override
-    public boolean insertUser(final UserDTO userDTO) {
-        validate(userDTO);
-        int result = userMapper.insertUser(userDTO);
-        log.info("Entity Id: {} is saved.", userDTO.getId());
-        return result > 0;
-    }
-
-    @Override
-    public UserDTO loginUser(final UserDTO userDTO) {
-        validate(userDTO);
-        return userMapper.loginUser(userDTO);
-    }
-
-    private void validate(final UserDTO userDTO) {
-        if(userDTO == null) {
-            log.warn("Entity cannot be null.");
-            throw new RuntimeException("Entity cannot be null.");
-        }
-
-        if(userDTO.getId() == null) {
-            log.warn("Unknown id.");
-            throw new RuntimeException("Unknown id.");
-        }
+    public UserDTO loginUser(String email, String passwd) {
+        return userMapper.loginUser(email, passwd);
     }
 }

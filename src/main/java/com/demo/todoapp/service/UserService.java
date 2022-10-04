@@ -3,7 +3,7 @@ package com.demo.todoapp.service;
 import com.demo.todoapp.dto.UserDTO;
 
 public interface UserService {
-    boolean validateUser(String userId);
-    boolean insertUser(UserDTO userDTO);
-    UserDTO loginUser(UserDTO userDTO);
+    //boolean existsUser(String userId);
+    UserDTO insertUser(UserDTO userDTO);
+    UserDTO loginUser(String email, String passwd);
 }
